@@ -1,0 +1,72 @@
+* Cloud model 및 특징 이해
+
+    - IaaS (Infrastructure as a Service) IT 전문가
+      서버같은것을 임대해서 사용하는것을 의미한다.
+      서버를 임대하여 미들웨어를 설치하여 그 위에 소프트웨어를 설치하여 사용
+        - Application
+        - Security
+        - Database
+        - Operating System
+
+    - PaaS (Platform as a Service) 소프트웨어 개발자
+      서버의 위에 플랫폼을 설치하여 애플리케이션만은 올려 사용할수 있는 서비스
+        - Application
+
+    - SaaS (Software as a Service) 최종 사용자
+      소프트웨어까지 개발한 후 네트워크를 통해 소프트웨어를 사용할 수 있는 서비스
+
+
+    - Model 별 관리 범위와 예시
+        - IaaS Infra 관점
+            1.Virtual Machines
+            2.Disk
+            3.Network
+            4.Firewalls
+        - CaaS 컨테이너 관점 (가상화 컨테이너 제공)
+            1.Containers
+            2.Volumes
+            3.Ips & Ports
+            4.Load Balancers
+        - PaaS/applicationPaaS Runtime 관점 (Application, Tomcat 등... 소프트웨어 개발환경 제공)
+            1.Web/WAS
+            2.Framework
+            3.Apps
+            4.Routes
+        - FaaS 서비스 관점 (기능단위의 제공 method, Function.. 네이버 지도 api 도 FaaS의 일종)
+            1.Actions
+            2.Triggers
+            3.Gateways
+            4.API
+        - SaaS 비즈니스 관점 (구글독스, erpService 등... 개발이 완료된 시스템을 네트워크를 통해 제공)
+            1.Whatever
+            2.You
+            3.Want
+            4.(to pay for)
+
+        - LowLevel 은 개발자가 건드릴것이 많다. 반면 개발자가 건드릴것이 없이 사용자가 바로 이용할 수 있는것을
+          HighLevel 이라고 한다. SaaS 가 HighLevel 이다.
+
+
+    - 조금 더 자세한 설명 (비용은 하나하나 구성해서 만드는게 더욱더 비싸다. 오른쪽으로 갈수록 비용절감 Top => IaaS => PaaS => SaaS)
+        - Traditional on-premises (자차를 끄는것과 같다. 자동자 구매부터 운전까지... 다만 목적지를 정하고 장비를 정하는 부분은 자유롭다.)
+          모든걸 사용자가 하나하나 선택하여 구성
+
+        - Infrastructure as a Service (자동차를 빌리는것과 같다. 운전이 가능하고 목적지를 자유롭게 적을 수 있다.)
+          서비스 제공자가 모든걸 구성해두고 사용자는 사용하고싶은것만
+          골라 결제하면 서비스 제공자 측에서 만들어서 제공해준다.
+
+        - Platform as a Service (자동차와 운전을 다른사람에게 맡기나, 목적지만을 선택할 수 있다.)
+          거의 모든걸 서비스 제공자측에서 제공하며 Application 만을 올려서 사용하면 된다.
+
+        - Software as a Service (버스와 같다. 목적지도 정해져있다. 원하는 서비스를 선택해 타면된다.)
+          모든걸 서비스 제공자가 제공한다. 완성된 서비스를 이용하면된다.
+
+
+    - Model 별 관리 범위와 예시
+        - SaaS (데이터, 웹 서비스, 웹 오피스) => GoogleDocs
+        - PaaS (개발 프레임워크, Middleware, OS) => GoogleAppEngine, Microsoft Azure
+        - IaaS (server, storage, Network) => AWS, Google Cloud
+
+
+
+
