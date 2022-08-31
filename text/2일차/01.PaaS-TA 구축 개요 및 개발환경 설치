@@ -1,0 +1,72 @@
+
+    - PaaS-TA 배포를 위한 기본 구성
+
+        - IaaS 종류
+            1.openstack
+              데이터 센터 전체에서 대규모 컴퓨팅, 스토리지 및 네트워킹 리소스
+              풀을 제어하는 클라우드 운영 체제
+            2.VM ware vSphere
+              서버를 가상화하는 베어메탈 하이퍼바이저
+              :호스트 운영체제에서 다수의 운영체제를 실행하기 위한 논리적 플랫폼
+            3.AWS
+              Amazon 에서 제공하는 클라우드 서비스이다
+            4.Google Cloud Platform
+              구글 내부와 동일한 지원 인프라스트럭처 위에서 호스팅을 제공하는
+              구글의 클라우드 컴퓨팅 서비스
+            5.Azure
+              글로벌 네트워크에서 구축, 관리 및 사용할 수 있는 Microsoft 의 클라우드
+              컴퓨팅 서비스
+
+        - Bosh 개념
+            - PaaS 를 이루는 VM 들을 설치하고 관리하는 도구이다.
+            - BOSH 는 manifest 파일을 사용하여 사용자에게 전체 시스템의 작동 방식과 각 부분의 상호 작용
+              방식을 정의하도록 요청
+            - BOSH manifest 는 해당 시스템의 모든 부분을 manifest 를 통해 추적
+            - 시스템의 각 부분에 에이전트를 배치하여 하나의 제품에 오류가 발생하면 운영자에게 신속하게
+              경고하고 문제를 자동으로 복구할 수 있다(라이프관리의 이점)
+            - 운영자는 일반적으로 BOSH 커뮤니티에서 BOSH 로 구축된 다양한 릴리즈를 작성하고 관리하는 사람이다.
+
+        - 여기 시험에 나온다함
+          Bosh 컴포넌트 구성 2일차 이미지 참조 : Bosh 컴포넌트 구성1.png, Bosh 컴포넌트 구성2.png
+
+        - Bosh 3대 구성 요소
+          모두 Bosh CPI 를 통해 IaaS 환경에 가상머신을 배포하는 역할을 한다.
+            - Release
+              1.설치 패키지, 2.설정 템플릿, 3.스크립트
+                  Packages - VM 에 설치될 패키지
+                    패키지, 패키지간의 의존관계, 설치 스크립트
+                  Jobs - VM 에서 수행될 프로세스
+                    템플릿: 배포 시 적용되는 설정 템플릿 파일
+                    프로세스 시작 / 종료 스크립트
+
+                  Release - Package 와 Job 의 모음
+                    vm 에 설치될 소프트웨어의 소스코드와 설치 프로그램이라고 생각하면된다.
+
+            - Stemcell
+              1.OS 이미지
+              2.에이전트
+
+                  Stemcell 구성 : 기본 OS 이미지 + BOSH Agent
+                    stemcell 자체는 서비스를 제공하지 않음
+                    Agent 를 이용하여 Blobstore 로 부터 Job 배포
+
+            - Manifest (YAML 파일 즉, spring 의 config 파일이라고 생각하면 된다.)
+              1.릴리즈
+              2.스템셀
+              3.네트워크
+              4.속성
+
+                BOSH Deployment manifest 는 components 요소 및 배포의 속성을 정의한 YAML 파일이다.
+                Deployment manifest 에는 software 를 설치하기 위해서 어떤 Stemcell(OS, BOSH agent) 를 사용할 것이며
+                Release 이름과 버전, VMs 용량, Jobs params 등을 정의하여 Bosh deploy CLI 를 이용하여 software 를 설치한다.
+
+                BOSH Deployment manifest 의 내용은 아래와 같다.
+                    - Deployment Identification: 배포 이름과 배포를 관리하는 BOSH Director 의 UUID 정보
+                    - Releases Block: deployment 안의 각 release 의 이름 및 버전 정보
+                    - Networks Block: 네트워크 구성 정보
+                    - Resource Pools Block: BOSH 로 생성하고 관리하는 가상 머신의 속성
+                    - Compilation Block: 컴파일시 필요한 가상 머신의 속성
+                    - Update Block: BOSH 가 배포 중에 작업 인스턴스를 업데이트 하는 방법을 정의
+                    - Jobs Block: 작업(jobs)에 대한 구성 및 자원 정보
+                    - Properties Block: 글로벌 속성과 일반화된 구성 정보를 설명
+
