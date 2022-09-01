@@ -1,0 +1,162 @@
+
+	* PaaS-TA 개발도구
+	
+		- Cli
+			
+		- 개요
+			OpenPaaS 배포와 Release 를 관리하기 위해 도움을 주는 커맨드 라인
+			유틸리티
+			
+			명령어에 따라 약어를 제공
+			- ex) start => st
+			
+		- Log into PaaS-TA
+			- Cli 도구는 애플리케이션을 푸시하거나 변경하기 전에 PaaS-TA에 로그인하고
+		      인증해야한다.		
+			- 이 작업은 cf login을 통해 수행되며, 다음과 같은 샘플이 아래에 표시된다.			
+			- 성공적으로 로그인하면 시스템으로 인증되며 사용하는 PaaS-TA 공급자는 액세스할 수 있는 정보와 계정에서
+			  수행할 수 있는 작업을 파악			
+			- CLI 도구는 일부 정보, 즉 PaaS-TA Endpoint API 및 인증 시 주어진
+			  토큰을 저장			
+			- 로그인할 때 비밀번호를 저장하는 대신 PaaS-TA는 Cli 가 저장할 수 있는 임시 토큰을 생성			
+			- Cli 는 모든 명령에 대해 이메일과 암호를 다시 묻는 대신 이 토큰을 사용할 수 있다.
+			- 토큰은 보통 24시간 후에 만료되며 cli 는 다시 로그인해야한다.
+			- 이렇게 하면 마지막으로 사용한 API Endpoint가 기억되므로 이제 24시간 동안 다시 인증하기 위해서는 이메일과 암호만 제공하면 된다.
+			- cli 는 명령줄에서 액세스 할 수 있는 기본 도움말이 함께 제공된다. cf help 명령어 이용
+			
+		- 주요 CLI 명령어 이해 (login)
+			- 분류 (GETTING STARTED)
+			  명령어 (login)
+			  역할 (OpenPaaS에 로그인 하기 위한 명령어)
+			  
+			- 분류 (GETTING STARTED)
+			  명령어 (login)
+			  역할 (cf 에 로그아웃)
+			  
+			- 분류 (APPS)
+			  명령어 (push)
+			  역할 (App 을 OpenPaaS에 배포하고 app 을 Start)
+			  
+			- 분류 (APPS)
+			  명령어 (delete)
+			  역할 (App 을 삭제)
+
+			- 분류 (APPS)
+			  명령어 (start)
+			  역할 (App 을 기동)
+			  
+			- 분류 (APPS)
+			  명령어 (stop)
+			  역할 (App 을 중지)
+			  
+			- 분류 (APPS)
+			  명령어 (restart)
+			  역할 (App 을 재기동)
+			  
+			- 분류 (APPS)
+			  명령어 (restage)
+			  역할 (App 을 restage)
+			  
+			- 분류 (SERVICE)
+			  명령어 (marketplace)
+			  역할 (cf 마켓플레이스에서 제공하는 서비스 목록을 조회)
+			
+			- 분류 (SERVICE)
+			  명령어 (create-service)
+			  역할 (마켓플레이스에서 제공하는 서비스로 인스턴스를 만듦)
+			  
+			- 분류 (SERVICE)
+			  명령어 (delete-service)
+			  역할 (서비스 인스턴스를 삭제)
+			  
+			- 분류 (SERVICE)
+			  명령어 (bind-service)
+			  역할 (App 과 서비스 인스턴스를 바인딩)
+			  
+			- 분류 (SERVICE)
+			  명령어 (unbind-service)
+			  역할 (App 과 서비스 인스턴스를 언바인딩)
+			  
+			- 분류 (ROUTE)
+			  명령어 (routes)
+			  역할 (현재 조직/스페이스에 존재하는 라우트 정보목록을 조회)
+			  
+			- 분류 (ROUTE)
+			  명령어 (delete-phaned-routes)
+			  역할 (App에 매핑되지 않은 라우트 정보를 모두 삭제)
+			  
+		- 주요 CLI 명령어 이해(login) 2
+			- 기본 Syntax
+			  $ cf login [-a API_URL] [-u USERNAME] [-p PASSWORD] [-o ORG] [-s SPACE]
+			
+			- 설명
+			  OpenPaaS에 로그인 하기 위한 명령어
+			
+			- 파라미터
+				-a API_URL: CLI 가 접속하려는 OpenPaaS URL				 
+				-u USERNAME: OpenPaaS에 접속하는 사용자 id				
+				-p PASSWORD: OpenPaaS에 접속하는 사용자 password				
+				-o ORG: OpenPaaS에 접속하는 사용자 소속 조직명 				
+				-s SPACE: OpenPaaS에 접속하는 사용자 스페이스직 명
+			 
+			- 로그아웃
+				- $ cf logout
+			
+			- 배포된 앱 확인
+				- % cf apps
+				
+			- 서비스를 확인
+				- $ cf service
+				
+				
+		- 주요 CLI 명령어 이해(push)
+			- 기본 Syntax 
+			  $ cf push APP_NAME 옵션들.....
+			
+			- 설명
+			  App을 OpenPaaS에 배포하고 app 을 Start
+			  
+			- 파라미터
+				- 파라미터명 (APP_NAME)
+				  설명 (push하는 App명(지정하지 않으면 디렉토리명))
+				  필수값 O
+				  
+				- 파라미터명 (-b BUILDPACK)
+				  설명 (custom 빌드팩 URL)
+				  필수값 x
+				  
+				- 파라미터명 (-c COMMAND)
+				  설명 (App start command)
+				  필수값 x
+				  
+				- 파라미터명 (-d DOMAIN)
+				  설명 (App 도메인)
+				  필수값 x
+				  
+				  
+		- CLI 로 배포하기
+			CF 명령어로 배포를 하기 위해 manifest.yml 을 작성
+			applications:
+			- name: test01			=> 배포 된 앱의 이름
+			  host: test01			=> Floating domain 앞에 들어갈 구분자 도메인
+			  memory: 1024M			=> 앱의 최대 사용가능 메모리
+			  instances: 1			=> 앱이 사용 할 instance 개수
+			  random-route: false	=> true 값을 주면 URL 을 랜덤으로 생성 여부
+			  path: ./test01.war	=> 배포하고자 하는 파일의 위치를 명시. 배포를 위한 cf 명령어는 "cf push" 이때 manifest.yml 파일이 있는 위치에서 실행
+			  
+			
+			- $ cf env: 환경변수를 통해 서비스정보 확인 db 정보같은것들을 다 확인할 수 있다.
+			
+	
+		* 주의사항
+			- 해당 서비스를 생성하고 바인딩하면 환경변수를 통해 해당 접속정보를 확인할 수 있다.
+			- 이 접속정보를 툴을 이용해 데이터를 컨트롤 할 수 있다.
+			- 바인딩을 새로 할 때마다 정보가 새로 생성되므로 한 번 바인딩한 이후에는
+			  바인딩상태를 유지하는것이 좋다.
+			  
+	
+		* 핵심정리
+			- CLI를 통해 api endpoint에 접근하여 PaaS-TA를 사용할 수 있다.
+			- CLI기반으로 앱을 배포할 수 있다.
+			- CLI기반으로 서비스를 생성 및 앱과 연동할 수 있다.
+			
