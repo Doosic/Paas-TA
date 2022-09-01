@@ -1,0 +1,74 @@
+
+	* cf cli 로그인 방법
+	
+		- cf login --skip-ssl-validation (인증서가 없을시)
+		- API endpoint: https://api.paas-ta.org
+		- Email: paasta_trainee08
+		- Password: trainee08
+		
+	* 배포된 애플리케이션 확인
+		
+		- cf apps
+		
+	* 생성한 서비스 확인
+		bound apps 를 통해 어느 애플리케이션에 바인딩되어있는지 확인가능
+		- cf services
+		
+	* 헬프 명령어
+		약어 사용가능 unbind-service => us
+		- cf help
+	
+	* 언바인딩 명령어
+		- cf us app_name service_instance
+		
+	* 삭제 명령어
+		- 앱: cf d app_name
+		- 서비스: cf ds service_name 이후 yes 입력
+		
+	* APP 배포방법 정리
+		CF 명령어로 배포를 하기 위해 manifest.yml 을 작성
+		배포명령어: "cf push" 명령어는 manifest.yml 파일이 있는곳에서 실행한다.
+			applications:
+			- name: test01			=> 배포 된 앱의 이름
+			  host: test01			=> Floating domain 앞에 들어갈 구분자 도메인
+			  memory: 1024M			=> 앱의 최대 사용가능 메모리
+			  instances: 1			=> 앱이 사용 할 instance 개수
+			  random-route: false	=> true 값을 주면 URL 을 랜덤으로 생성 여부
+			  path: ./test01.war	=> 배포하고자 하는 파일의 위치를 명시.
+			  
+		- routs 관련 오류 발생시
+		  오류내용: routes cannot be mapped to destinations in different spaces
+		  해결방법: cf push --random-route
+		  
+	* SERVICE 이용
+		- 서비스 찾기: cf marketplace
+		- 설치: cf create-service 서비스명 플랜명 인스턴스명
+		
+	* APP 에 SERVICE 바인드
+		- cf bind-service app_name service_name
+		바인딩 후 restage를 꼭 해주어야 한다.
+		- cf restage welcome-cf
+		
+	* 운영중인 애플리케이션에 들어가는 방법
+		- cf apps 를 통하여 운영중인 app을 확인하고
+		  routes 에 나온 주소를 통하여 해당 주소에 들어가면된다.
+		  
+	* 주로 사용하는 내용 중요!
+		- create-user-provided-service, cups
+		  마켓플레이스에 등록되지않은 서비스를 사용할수있는 기능
+		  
+		- cf help cups 를 이용하여 사용방법을 알아두자.
+		
+		- 시험시 cups 사용함 linux 환경이기에 리눅스 환경 명령어를 알아두자
+			$ cf create-user-provided-service my-db-mine -p '{"username":"admin", "password":"pa55woRD"}'
+			
+
+	* mysql 테이블 생성 방법
+		- 등록되어있는 컨테이너 접속하기: cf ssh welcome-cf
+		- 연결된 app의 정보를 띄워준다. cf env welcome-cf 
+		- ssh 터널링 방법: cf ssh welcome-cf -L 9999:ip:port
+		  env 를 이용하여 해당 app의 service(mysql)에 ip정보와 port 정보를 입력하자
+		  ex) cf ssh welcome-cf -L 9999:10.0.40.143:13307
+		- 터널링이 된 상태로 cmd 를 하나더 켜서 다음명령어 입력
+		  명령어: telnet localhost 9999
+	
